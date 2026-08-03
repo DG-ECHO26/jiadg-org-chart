@@ -632,8 +632,8 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
       return h + '</div></div>';
     }},
 
-    { name:"Department Workers", render:function(){
-      var h = '<div class="inner">'+head("Slide 05 · Christian Music & Arts","Department Workers","Worship, music, and altar service teams")+
+    { name:"Workers & Volunteers", render:function(){
+      var h = '<div class="inner">'+head("Slide 05 · Christian Minstrels & Arts","Workers & Volunteers","Worship, music, and altar service teams")+
               hint("Rosters update live — the count beside each team follows the list.")+'<div class="grid g3">';
       D.cma.forEach(function(g,i){
         h += '<article class="card">'+delCard("cma/"+i)+'<div class="dept-head">'+ico(g.icon,g.tone)+

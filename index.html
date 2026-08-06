@@ -38,6 +38,36 @@
     -webkit-font-smoothing:antialiased;
     overflow:hidden;
   }
+  /* ---- Navy theme (select "Navy" in the Theme panel's ambient swatches) ----
+     Overrides the shared tokens above; every component below already reads
+     these via var(), so this block is enough to re-skin the whole deck.
+     --gold/--gold-2/--gold-dim/--emerald/--emerald-dim are deliberately left
+     out here — those are set on <html> by applyTheme() from D.theme, and a
+     declaration here would permanently shadow that for every element under
+     body, breaking the live accent-color picker while navy is active. */
+  body.theme-navy{
+    color-scheme:dark;
+    --ink:#EAF1F9; --soft:#C3D2E3; --muted:#8DA2BA;
+    --bg:#0B1B2E; --bg-2:#16324F; --surface:#132D4A;
+    --glass:rgba(255,255,255,.045);
+    --glass-2:rgba(255,255,255,.075);
+    --glass-border:rgba(255,255,255,.14);
+    --edge:rgba(255,255,255,.10);
+    --edge-2:rgba(255,255,255,.16);
+    --shadow-xs:0 1px 0 rgba(255,255,255,.04) inset, 0 2px 10px rgba(0,0,0,.24);
+    --shadow-sm:0 1px 0 rgba(255,255,255,.05) inset, 0 10px 26px rgba(0,0,0,.30);
+    --shadow-md:0 1px 0 rgba(255,255,255,.06) inset, 0 22px 48px rgba(0,0,0,.42);
+    --shadow-lg:0 1px 0 rgba(255,255,255,.06) inset, 0 34px 80px rgba(0,0,0,.50);
+    --display:"Cormorant Garamond","Iowan Old Style",Georgia,serif;
+  }
+  /* These three fill with --ink as a solid "inverse" chip in the light theme;
+     on navy, --ink is a light text color, so they'd render invisible unless
+     swapped to a gold fill instead. */
+  body.theme-navy .tool.is-on{background:var(--gold);color:#10243C;border-color:var(--gold)}
+  body.theme-navy .toast{background:var(--gold);color:#10243C}
+  body.theme-navy .filter-chip.is-active{background:var(--gold);border-color:var(--gold);color:#10243C}
+  body.theme-navy .tier-card::before{background:#5C8BC4;box-shadow:0 0 20px rgba(92,139,196,.7)}
+
   .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
   ::selection{background:var(--gold-dim);color:var(--ink)}
 
@@ -132,17 +162,19 @@
   .cover .city{display:block;font-family:var(--body);font-size:.34em;letter-spacing:.05em;text-transform:uppercase;font-weight:600;color:var(--gold-2);margin-top:12px}
   .rule{width:64px;height:2px;background:linear-gradient(90deg,var(--gold),rgba(166,132,26,0));border-radius:3px;margin:20px 0 22px}
 
-  /* ---- Dashboard stat cards (Cover) ---- */
-  .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:22px}
-  .stat-card{background:var(--glass-2);border:1px solid var(--edge);border-radius:var(--r-md);
+  /* ---- Dashboard stat cards (Main Page) ---- */
+  .stat-row-label{margin:22px 0 0;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700}
+  .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:8px}
+  .stat-card{position:relative;background:var(--glass-2);border:1px solid var(--edge);border-radius:var(--r-md);
     padding:14px 14px 13px;box-shadow:var(--shadow-xs);transition:transform .26s var(--ease),box-shadow .26s var(--ease)}
   .stat-card:hover{transform:translateY(-3px) scale(1.015);box-shadow:var(--shadow-sm)}
+  body.editing .stat-card{padding-top:34px}
   .stat-num{font-family:var(--display);font-size:clamp(20px,2.4vw,26px);font-weight:700;color:var(--ink);line-height:1;letter-spacing:-.01em}
   .stat-label{margin:6px 0 0;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
   @media (max-width:560px){.stat-row{grid-template-columns:repeat(2,1fr)}}
 
   /* ---- Anniversary countdown ---- */
-  .countdown{position:relative;grid-column:1/-1;overflow:visible;margin-top:clamp(8px,2vh,20px);
+  .countdown{position:relative;grid-column:1/-1;order:-2;overflow:visible;margin-bottom:clamp(8px,2vh,20px);
     padding:clamp(24px,3.4vw,36px) clamp(16px,3vw,32px) clamp(22px,2.6vw,30px);text-align:center;
     border-radius:var(--r-2xl);background:var(--glass-2);-webkit-backdrop-filter:blur(28px) saturate(1.3);backdrop-filter:blur(28px) saturate(1.3);
     border:1px solid var(--glass-border);box-shadow:var(--shadow-lg);
@@ -201,6 +233,9 @@
   .verse-block{border-left:2px solid var(--gold);padding:4px 0 4px 18px}
   .verse-block p{margin:0;font-family:var(--display);font-size:clamp(15px,1.8vw,21px);line-height:1.4;color:var(--ink);font-weight:500;font-style:italic}
   .verse-block cite{display:block;margin-top:8px;font-family:var(--body);font-style:normal;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .mission-block{margin-top:18px;border-left:2px solid var(--emerald);padding:4px 0 4px 18px}
+  .mission-block .mission-label{margin:0 0 4px;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--emerald);font-weight:700}
+  .mission-block .mission-text{margin:0;font-family:var(--body);font-size:13.5px;line-height:1.55;color:var(--soft)}
   .cover-art{display:grid;place-items:center;position:relative}
   .cover-art .halo{position:absolute;width:min(100%,430px);aspect-ratio:1;border-radius:50%;
     border:1px solid rgba(166,132,26,.14);
@@ -333,6 +368,34 @@
   .duties .x{width:16px;height:16px;border:none;border-radius:50%;background:var(--edge-2);color:var(--soft);font-size:11px;line-height:1;cursor:pointer;padding:0;display:none;place-items:center}
   body.editing .duties .x{display:grid}
   .duties .x:hover{background:var(--danger);color:#fff}
+
+  /* ---- Statement of Faith (condensed, under the Main Page logo — narrow) ---- */
+  .faith-tabs-wrap{width:100%;max-width:340px;margin:26px auto 0}
+  .faith-mini-title{margin:0 0 14px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--gold-2);text-align:center}
+  .faith-tabbar{position:relative;display:flex;justify-content:center;flex-wrap:wrap;gap:14px;
+    border-bottom:1px solid var(--edge);margin:0 auto 16px;padding:0 2px}
+  .faith-tab{appearance:none;background:none;border:none;padding:0 1px 9px;font-family:var(--body);font-size:9px;
+    letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--soft);cursor:pointer;
+    transition:color .2s var(--ease)}
+  .faith-tab:hover{color:var(--ink)}
+  .faith-tab.is-active{color:var(--gold-2)}
+  .faith-tab-indicator{position:absolute;left:0;bottom:-1px;height:2px;background:var(--gold);border-radius:2px;
+    transition:transform .32s cubic-bezier(.4,0,.2,1),width .32s cubic-bezier(.4,0,.2,1)}
+  .faith-tab-panels{text-align:left}
+  .faith-panel{display:none}
+  .faith-panel.is-active{display:block;animation:faithFade .35s var(--ease) both}
+  @keyframes faithFade{0%{opacity:0;transform:translateY(6px)}100%{opacity:1;transform:translateY(0)}}
+  .faith-lede{margin:0;font-size:12px;line-height:1.55;color:var(--soft);text-align:left}
+  .faith-belief-list{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+  .faith-belief-list li{position:relative;display:flex;align-items:flex-start;gap:9px}
+  .faith-belief-check{flex:0 0 auto;width:14px;height:14px;color:var(--muted);margin-top:2px}
+  .faith-belief-check svg{width:100%;height:100%}
+  .faith-belief-body{flex:1 1 auto;font-size:12px;line-height:1.55;color:var(--soft)}
+  .faith-belief-lead{font-weight:700;font-style:italic;color:var(--ink)}
+  .faith-belief-list .x{position:absolute;right:0;top:0;width:15px;height:15px;border:none;border-radius:50%;
+    background:var(--edge-2);color:var(--soft);font-size:10px;line-height:1;cursor:pointer;padding:0;display:none;place-items:center}
+  body.editing .faith-belief-list .x{display:grid}
+  .faith-belief-list .x:hover{background:var(--danger);color:#fff}
 
   /* ---- Departments ---- */
   .dept-head{display:flex;align-items:center;gap:10px;margin-bottom:11px}
@@ -798,7 +861,13 @@
   @media print{
     @page{size:landscape;margin:12mm}
     html,body{overflow:visible !important;height:auto !important;background:#fff !important}
-    .ambient,.sidebar,.topbar,.toast,.add,.add-card,.card-del,.drag-handle,.edit-hint,.chip .x,.duties .x,.step .chev,.dg-toggle,.countdown-edit-label,.countdown .spark,.gt-toolbar,.gt-toggle,.gt-flow-cta-arrow,.spotlight-wrap,.profile-wrap,.filter-chips,.dg-net-toolbar,.tnode-collapse{display:none !important}
+    /* Printed output always stays light/legible, even when browsing in the navy theme */
+    body.theme-navy{
+      --ink:#1D1D1F !important; --soft:#6E6E73 !important; --muted:#8E8E93 !important;
+      --surface:#FFFFFF !important; --glass:rgba(255,255,255,.62) !important; --glass-2:rgba(255,255,255,.94) !important;
+      --glass-border:rgba(255,255,255,.55) !important; --edge:rgba(60,60,67,.09) !important; --edge-2:rgba(60,60,67,.15) !important;
+    }
+    .ambient,.sidebar,.topbar,.toast,.add,.add-card,.card-del,.drag-handle,.edit-hint,.chip .x,.duties .x,.faith-belief-list .x,.step .chev,.dg-toggle,.countdown-edit-label,.countdown .spark,.gt-toolbar,.gt-toggle,.gt-flow-cta-arrow,.spotlight-wrap,.profile-wrap,.filter-chips,.dg-net-toolbar,.tnode-collapse{display:none !important}
     .app-body{display:block !important}
     .dg-body{display:block !important}
     .gt-step-body{display:flex !important}
@@ -873,7 +942,7 @@
     </button>
     <div class="counter"><b id="cur">01</b> <span>/ <span id="tot">08</span></span></div>
     <div class="bar-tools">
-      <button class="tool" id="printBtn" title="Print or save as PDF">Print</button>
+      <button class="tool" id="signupBtn" title="Sign up">Sign Up</button>
       <button class="tool" id="editBtn" hidden>Edit</button>
       <button class="tool ghost" id="resetBtn" title="Undo your most recent change" hidden>Undo</button>
       <button class="tool ghost" id="themeBtn" title="Customize appearance" hidden>Theme</button>
@@ -927,12 +996,14 @@
   <div class="auth-box">
     <h3>Leader sign in</h3>
     <p>Only signed-in leaders can change the chart. Everyone else sees it read-only.</p>
-    <label>Email<input type="email" id="authEmail" autocomplete="username"></label>
-    <label>Password<input type="password" id="authPass" autocomplete="current-password"></label>
-    <div class="auth-actions">
-      <button class="tool ghost" id="authCancel">Cancel</button>
-      <button class="tool is-on" id="authGo">Sign in</button>
-    </div>
+    <form id="authForm" autocomplete="on">
+      <label>Email<input type="email" id="authEmail" name="username" autocomplete="username" required></label>
+      <label>Password<input type="password" id="authPass" name="password" autocomplete="current-password" required></label>
+      <div class="auth-actions">
+        <button type="button" class="tool ghost" id="authCancel">Cancel</button>
+        <button type="submit" class="tool is-on" id="authGo">Sign in</button>
+      </div>
+    </form>
     <p class="auth-err" id="authErr"></p>
   </div>
 </div>
@@ -1111,17 +1182,37 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
     theme:{ gold:"#A6841A", emerald:"#1F7A4D" },
     ambientTheme:"ivory",
     slideMeta:{
-      "Leadership Structure": { eyebrow:"Slide 02", title:"Leadership Structure", sub:"Spiritual covering and governance of the local body" },
-      "Leadership Flow": { eyebrow:"Slide 03", title:"Leadership Flow", sub:"How authority, care, and accountability travel through the church" },
-      "Ministry Leadership": { eyebrow:"Slide 04", title:"Ministry Leadership", sub:"8 ministries · each with an appointed head" },
+      "Leadership Structure": { eyebrow:"Slide 03", title:"Leadership Structure", sub:"Spiritual covering and governance of the local body" },
+      "Leadership Flow": { eyebrow:"Slide 04", title:"Leadership Flow", sub:"How authority, care, and accountability travel through the church" },
+      "Ministry Leadership": { eyebrow:"Slide 05", title:"Ministry Leadership", sub:"8 ministries · each with an appointed head" },
       "Assistant Ministry Heads": { eyebrow:"Assistant Ministry Heads", title:"Assistant Ministry Heads", sub:"Supporting the ministry heads in day-to-day service" },
       "Growth Track": { eyebrow:"New Members", title:"Growth Track", sub:"From first visit to becoming a growing disciple of Jesus" },
-      "Bible Studies": { eyebrow:"Slide 05", title:"Bible Studies & LINKup Groups", sub:"Every DGroup, its leaders, and its own personal discipleship network" },
-      "Workers & Volunteers": { eyebrow:"Slide 06 · Christian Minstrels & Arts", title:"Workers & Volunteers", sub:"Worship, music, and altar service teams" },
-      "Administrative Ministries": { eyebrow:"Slide 07", title:"Administrative Ministries", sub:"Order, communication, and stewardship" }
+      "Bible Studies": { eyebrow:"Slide 06", title:"Bible Studies & LINKup Groups", sub:"Every DGroup, its leaders, and its own personal discipleship network" },
+      "Workers & Volunteers": { eyebrow:"Slide 07 · Christian Minstrels & Arts", title:"Workers & Volunteers", sub:"Worship, music, and altar service teams" },
+      "Administrative Ministries": { eyebrow:"Slide 08", title:"Administrative Ministries", sub:"Order, communication, and stewardship" }
     },
     creed:["Serving with excellence","Leading with humility","Growing together in Christ"],
-    verse:{ text:"Let all things be done decently and in order.", ref:"1 Corinthians 14:40" },
+    verse:{ text:"But other seed fell on good soil and produced grain—some a hundred, some sixty, some thirty times what was sown.", ref:"Matthew 13:8" },
+    mission:"Add your mission statement here — describe who you're reaching, how, and why.",
+    faith:{
+      weAre:"We are an interdenominational, Christ-centered, Bible-believing and Spirit-filled group. We recognize the existence of denominations of a particular Christian group, yet we do not belong or are affiliated with any particular denomination.",
+      believeIn:[
+        {lead:"We BELIEVE in", text:"the Bible, both Old and New Testament, as the inspired Word of God (2 Tim. 3:14; 2 Pet. 1:21; Mark 1:15)."},
+        {lead:"We BELIEVE in", text:"one God, the deity of God the Father, the deity of Jesus, the Son of God, and the deity of the Holy Spirit (1 Pet. 1:3; Rev. 1:8)."},
+        {lead:"We BELIEVE in", text:"the Virgin Birth of Jesus, the only begotten Son of God, and in His sinless life (Matt. 1:23; Luke 1:35; John 1:14; John 3:16)."}
+      ],
+      believeThat:[
+        {lead:"We BELIEVE that", text:"salvation is a gift from God through Jesus Christ, available to all who will repent and believe the Gospel."},
+        {lead:"We BELIEVE that", text:"one must have a born-again experience (personal relationship with God) to see the kingdom of God (Eph. 2:8; John 3:16; Mark 1:15; John 3:3) and to be baptized in water as a public proclamation of his faith in Christ (Matthew 3:13-17)."},
+        {lead:"We BELIEVE that", text:"Jesus Christ was crucified, died and was buried. He descended into hell, and on the third day He rose again from the dead. He ascended into heaven, and is now seated at the right hand of God, the Father Almighty. From there He will again return to earth in bodily form to judge the living and the dead. (Luke 23:33; Rom. 5:3; Eph. 2:4-7)"}
+      ]
+    },
+    goals:[
+      {stat:"38", label:"People"},
+      {stat:"9", label:"Ministries"},
+      {stat:"6", label:"Core Leaders"},
+      {stat:"55", label:"Workers"}
+    ],
     tiers:[
       {rank:"Board of Elders", tag:"Spiritual Covering", accent:"t-gold",
        people:[{name:"Ptr. Bhavesh",photo:""},{name:"Mommy Lyn",photo:""},{name:"Ptra. Alice",photo:""},{name:"Ptr. Mark",photo:""},{name:"Ptr. Jess",photo:""},{name:"Ptra. Au",photo:""}]},
@@ -1291,6 +1382,7 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
   var dgOpen = {};
   var gtOpen = {};
   var treeCollapsed = {};
+  var faithTab = "weAre";
 
   // Undo history: a snapshot of D is pushed just before every edit takes
   // effect, so the Undo button can step back through recent changes one at a
@@ -1404,6 +1496,47 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
   // Leadership Structure tiers used to hold plain name strings; each name is
   // now {name, photo} so photos can be uploaded per person. Older saved docs
   // still storing plain strings get folded onto that shape here.
+  // Statement of Faith has cycled shape a few times: plain bullet-point
+  // strings, a single condensed line, and now {lead,text} pairs so the
+  // "We BELIEVE..." lead-in can render bold while the rest stays regular
+  // weight. Fold any older doc onto the current {lead,text} list shape.
+  function migrateFaith(saved){
+    var f = saved && saved.faith;
+    if (!f) return null;
+    function toBeliefList(v, defaultLead){
+      if (Array.isArray(v)){
+        return v.map(function(x){
+          if (x && typeof x === "object") return {lead:x.lead || defaultLead, text:x.text || ""};
+          return {lead:defaultLead, text:String(x || "")};
+        });
+      }
+      if (typeof v === "string" && v) return [{lead:defaultLead, text:v}];
+      return null;
+    }
+    return {
+      weAre: typeof f.weAre === "string" ? f.weAre : DEFAULTS.faith.weAre,
+      believeIn: toBeliefList(f.believeIn, "We BELIEVE in") || DEFAULTS.faith.believeIn,
+      believeThat: toBeliefList(f.believeThat, "We BELIEVE that") || DEFAULTS.faith.believeThat
+    };
+  }
+  // Goals started out as a fixed {people,ministries,core,workers} object;
+  // upgrade any doc saved in that shape into the editable list shape.
+  function migrateGoals(saved){
+    var g = saved && saved.goals;
+    if (!g) return null;
+    if (Array.isArray(g)){
+      return g.map(function(x){ return {stat:(x&&x.stat)||"", label:(x&&x.label)||""}; });
+    }
+    if (typeof g === "object"){
+      return [
+        {stat:String(g.people||""), label:"People"},
+        {stat:String(g.ministries||""), label:"Ministries"},
+        {stat:String(g.core||""), label:"Core Leaders"},
+        {stat:String(g.workers||""), label:"Workers"}
+      ];
+    }
+    return null;
+  }
   function migrateTiers(saved){
     var savedTiers = (saved && Array.isArray(saved.tiers)) ? saved.tiers : null;
     if (!savedTiers) return null;
@@ -1463,6 +1596,8 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
     out.slideMeta = Object.assign({}, DEFAULTS.slideMeta, byName);
     out.dgroups = migrateDgroups(saved) || out.dgroups;
     out.tiers = migrateTiers(saved) || out.tiers;
+    out.goals = migrateGoals(saved) || out.goals;
+    out.faith = migrateFaith(saved) || out.faith;
     out.growthTrack = migrateGrowthTrack(saved) || out.growthTrack;
     // The site moved from a dark navy theme to a light premium theme, which
     // changed the default accent colors. Docs still sitting on the old,
@@ -1516,14 +1651,23 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
       css:"radial-gradient(120% 90% at 28% 18%, #FBE07A 0%, rgba(251,224,122,0) 60%), radial-gradient(90% 70% at 92% 92%, #D9A62B 0%, rgba(217,166,43,0) 60%), linear-gradient(160deg,#F0C846 0%,#E0B233 55%,#C99A1E 100%)",
       swatch:"linear-gradient(145deg,#FBE07A,#E0B233 55%,#C99A1E)",
       shader:["#8A5A12","#F2C94C","#D97B3F"]
+    },
+    navy: {
+      label:"Navy",
+      dark:true,
+      css:"radial-gradient(120% 90% at 50% -20%, #1B3A5E 0%, rgba(27,58,94,0) 60%), radial-gradient(90% 70% at 100% 110%, #0F2C4A 0%, rgba(15,44,74,0) 62%), linear-gradient(180deg,#0B1B2E 0%,#0A1728 55%,#081422 100%)",
+      swatch:"linear-gradient(145deg,#1B3A5E,#102842 55%,#0B1B2E)",
+      shader:["#C9A227","#4FBF87","#E3C066"]
     }
   };
+  var NAVY_ACCENT = { gold:"#E3C066", emerald:"#4FBF87" };
   function applyAmbientTheme(){
     var key = D.ambientTheme || "ivory";
     var preset = AMBIENT_PRESETS[key] || AMBIENT_PRESETS.ivory;
     var amb = document.querySelector(".ambient");
     if (amb) amb.style.background = preset.css;
     if (window.__liquidBgSetPalette) window.__liquidBgSetPalette(preset.shader);
+    document.body.classList.toggle("theme-navy", !!preset.dark);
   }
 
   /* ---------- path helpers ---------- */
@@ -1554,6 +1698,8 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
       how:["New action"], responsible:["New name"], completion:["Completion criteria to be added."],
       topics:[], extra:[]};
     if (kind === "extraPair") return {label:"Detail", value:"Value"};
+    if (kind === "goal") return {stat:"70+", label:"People Reach"};
+    if (kind === "belief") return {lead:"We BELIEVE that", text:"(add your statement)"};
     return "New item";
   }
 
@@ -1599,6 +1745,48 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
            '" aria-label="Drag to reorder" title="Drag to reorder"><svg viewBox="0 0 24 24"><use href="#ic-grip"/></svg></button>';
   }
   function hint(t){ return '<p class="edit-hint">'+t+'</p>'; }
+  function faithBlock(){
+    var tabs = [
+      {key:"weAre", label:"We Are"},
+      {key:"believeIn", label:"We Believe In"},
+      {key:"believeThat", label:"We Believe That"}
+    ];
+    function beliefList(basePath, arr){
+      return '<ul class="faith-belief-list">'+
+        arr.map(function(item,i){
+          var path = basePath+"/"+i;
+          return '<li>'+
+            '<span class="faith-belief-check"><svg viewBox="0 0 24 24"><use href="#ic-check"/></svg></span>'+
+            '<p class="faith-belief-body">'+ed(path+"/lead","faith-belief-lead")+' '+ed(path+"/text")+'</p>'+
+            '<button class="x" data-del="'+path+'" aria-label="Remove statement">&times;</button>'+
+          '</li>';
+        }).join("")+
+        '<li><button class="add" data-add="'+basePath+'" data-kind="belief">+ Add statement</button></li>'+
+      '</ul>';
+    }
+    return '<div class="faith-tabs-wrap">'+
+      '<p class="faith-mini-title">Statement of Faith</p>'+
+      hint("Click a heading to switch sections. Tap any line to edit it, use &times; to remove a statement, or + Add statement to include another point.")+
+      '<div class="faith-tabbar" role="tablist" aria-label="Statement of Faith sections">'+
+        tabs.map(function(t){
+          return '<button type="button" class="faith-tab'+(faithTab===t.key?" is-active":"")+
+            '" data-faith-tab="'+t.key+'" role="tab" aria-selected="'+(faithTab===t.key)+'">'+t.label+'</button>';
+        }).join("")+
+        '<span class="faith-tab-indicator" id="faithTabIndicator"></span>'+
+      '</div>'+
+      '<div class="faith-tab-panels">'+
+        '<div class="faith-panel'+(faithTab==="weAre"?" is-active":"")+'" data-faith-panel="weAre">'+
+          '<p class="faith-lede">'+ed("faith/weAre")+'</p>'+
+        '</div>'+
+        '<div class="faith-panel'+(faithTab==="believeIn"?" is-active":"")+'" data-faith-panel="believeIn">'+
+          beliefList("faith/believeIn", D.faith.believeIn)+
+        '</div>'+
+        '<div class="faith-panel'+(faithTab==="believeThat"?" is-active":"")+'" data-faith-panel="believeThat">'+
+          beliefList("faith/believeThat", D.faith.believeThat)+
+        '</div>'+
+      '</div>'+
+    '</div>';
+  }
   function head(slideName){
     return '<div class="head"><p class="eyebrow">'+ed("slideMeta/"+slideName+"/eyebrow")+'</p><h2 class="title">'+ed("slideMeta/"+slideName+"/title")+
            '</h2><p class="subtitle">'+ed("slideMeta/"+slideName+"/sub")+'</p></div>';
@@ -1712,14 +1900,6 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
     D.dgroups.forEach(function(g){ g.networks.forEach(walk); });
     return Object.keys(set);
   }
-  function computeStats(){
-    var core = 0;
-    D.tiers.forEach(function(t){ if (/core leader/i.test(t.rank)) core += t.people.length; });
-    var workers = 0;
-    D.cma.forEach(function(g){ workers += g.people.length; });
-    D.admin.forEach(function(g){ workers += g.people.length; });
-    return { people: collectAllNames().length, ministries: D.ministries.length, core: core, workers: workers };
-  }
   function collectRoles(name){
     var roles = [];
     if (!name) return roles;
@@ -1754,8 +1934,7 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
 
   /* ---------- slides ---------- */
   var SLIDES = [
-    { name:"Cover", render:function(){
-      var stats = computeStats();
+    { name:"Main Page", render:function(){
       return '<div class="inner cover"><div class="cover-copy">'+
         '<span class="badge"><svg viewBox="0 0 24 24"><use href="#ic-cake"/></svg>'+ed("anniversary")+'</span>'+
         '<h1>'+ed("church/name")+'<span class="city">'+ed("church/city")+'</span></h1>'+
@@ -1764,16 +1943,24 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
           D.creed.map(function(_,i){ return '<li>'+ed("creed/"+i)+'</li>'; }).join("")+
         '</ul>'+
         '<div class="verse-block"><p>'+ed("verse/text")+'</p><cite>'+ed("verse/ref")+'</cite></div>'+
+        '<div class="mission-block"><p class="mission-label">Our Mission</p><p class="mission-text">'+ed("mission")+'</p></div>'+
+        '<p class="stat-row-label">Goals</p>'+
+        hint("Tap a number or label to edit it. Use &times; to remove a goal, drag the grip to reorder, or add a new one — e.g. &ldquo;70+&rdquo; / &ldquo;People Reach&rdquo;.")+
         '<div class="stat-row">'+
-          '<div class="stat-card"><div class="stat-num">'+stats.people+'</div><div class="stat-label">People</div></div>'+
-          '<div class="stat-card"><div class="stat-num">'+stats.ministries+'</div><div class="stat-label">Ministries</div></div>'+
-          '<div class="stat-card"><div class="stat-num">'+stats.core+'</div><div class="stat-label">Core Leaders</div></div>'+
-          '<div class="stat-card"><div class="stat-num">'+stats.workers+'</div><div class="stat-label">Workers</div></div>'+
+          D.goals.map(function(_,i){
+            return '<div class="stat-card" data-drag-list="goals" data-drag-index="'+i+'" draggable="false">'+
+              delCard("goals/"+i)+dragHandle("goals",i)+
+              '<div class="stat-num">'+ed("goals/"+i+"/stat")+'</div>'+
+              '<div class="stat-label">'+ed("goals/"+i+"/label")+'</div></div>';
+          }).join("")+
+          '<button class="add-card" data-add="goals" data-kind="goal">+ Add goal</button>'+
         '</div>'+
-        '<p style="margin:18px 0 0;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#6C7C8E;font-weight:600">'+
+        '<p style="margin:18px 0 0;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600">'+
           ed("docTitle")+' &nbsp;·&nbsp; '+ed("updated")+'</p>'+
       '</div><div class="cover-art"><span class="halo"></span><span class="halo two"></span>'+
-        '<img src="'+LOGO+'" alt="Jesus Is Alive Community logo"></div>'+
+        '<img src="'+LOGO+'" alt="Jesus Is Alive Community logo">'+
+        faithBlock()+
+      '</div>'+
       '<div class="countdown" id="countdown">'+
         '<span class="spark s1"></span><span class="spark s2"></span><span class="spark s3"></span>'+
         '<span class="spark s4"></span><span class="spark s5"></span><span class="spark s6"></span>'+
@@ -1981,6 +2168,7 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
     }).join("");
     applyEditable();
     refreshCountdownNeon();
+    positionFaithIndicator();
   }
   function renderSlide(i){
     var sec = stage.children[i];
@@ -1988,13 +2176,14 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
     sec.innerHTML = SLIDES[i].render();
     applyEditable();
     if (i === 0) refreshCountdownNeon();
+    positionFaithIndicator();
   }
   function applyEditable(){
     var eds = stage.querySelectorAll(".ed");
     for (var i = 0; i < eds.length; i++) eds[i].contentEditable = editing ? "true" : "false";
   }
   var SLIDE_ICONS = {
-    "Cover":"ic-church", "Leadership Structure":"ic-crown", "Leadership Flow":"ic-layers",
+    "Main Page":"ic-church", "Leadership Structure":"ic-crown", "Leadership Flow":"ic-layers",
     "Ministry Leadership":"ic-star", "Bible Studies":"ic-book", "Workers & Volunteers":"ic-mic",
     "Administrative Ministries":"ic-admin", "Growth Track":"ic-trophy", "Closing":"ic-heart"
   };
@@ -2033,6 +2222,15 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
     }
   }
   window.addEventListener("resize", positionIndicator);
+  function positionFaithIndicator(){
+    var bar = stage.querySelector(".faith-tabbar");
+    var indicator = stage.querySelector(".faith-tab-indicator");
+    var activeTab = bar && bar.querySelector(".faith-tab.is-active");
+    if (!bar || !indicator || !activeTab) return;
+    indicator.style.width = activeTab.offsetWidth + "px";
+    indicator.style.transform = "translateX(" + activeTab.offsetLeft + "px)";
+  }
+  window.addEventListener("resize", positionFaithIndicator);
   function go(n){
     idx = Math.max(0, Math.min(SLIDES.length-1, n));
     for (var i = 0; i < stage.children.length; i++){
@@ -2421,10 +2619,8 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
     toast(undoStack.length ? "Undone — " + undoStack.length + " more step" + (undoStack.length === 1 ? "" : "s") + " available" : "Undone — that was the last change on record");
   });
 
-  document.getElementById("printBtn").addEventListener("click", function(){
-    if (editing){ editBtn.click(); }
-    toast("Preparing print layout…");
-    setTimeout(function(){ window.print(); }, 260);
+  document.getElementById("signupBtn").addEventListener("click", function(){
+    toast("Sign up link coming soon");
   });
 
   prevBtn.addEventListener("click", function(){ go(idx-1); });
@@ -2472,20 +2668,19 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
     }
   });
   document.getElementById("authCancel").addEventListener("click", function(){ authWrap.hidden = true; });
-  document.getElementById("authGo").addEventListener("click", function(){
+  document.getElementById("authForm").addEventListener("submit", function(e){
+    e.preventDefault();
     var email = document.getElementById("authEmail").value.trim();
     var pass  = document.getElementById("authPass").value;
     authErr.textContent = "Checking…";
     sb.auth.signInWithPassword({ email: email, password: pass }).then(function(r){
       if (r.error){ authErr.textContent = r.error.message; return; }
       authWrap.hidden = true;
-      document.getElementById("authPass").value = "";
       setSignedIn(r.data.session);
       toast("Signed in — you can edit");
     });
   });
   authWrap.addEventListener("keydown", function(e){
-    if (e.key === "Enter") document.getElementById("authGo").click();
     if (e.key === "Escape") authWrap.hidden = true;
   });
 
@@ -2513,8 +2708,21 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
     var btn = e.target.closest(".amb-swatch");
     if (!btn) return;
     pushUndo();
-    D.ambientTheme = btn.getAttribute("data-amb");
+    var newKey = btn.getAttribute("data-amb");
+    var goingDark = !!(AMBIENT_PRESETS[newKey] && AMBIENT_PRESETS[newKey].dark);
+    var wasDark = !!(AMBIENT_PRESETS[D.ambientTheme] && AMBIENT_PRESETS[D.ambientTheme].dark);
+    // Only swap accent defaults for anyone still on the untouched defaults —
+    // real customizations (picked via the color inputs) are always kept.
+    if (goingDark && !wasDark && D.theme.gold === DEFAULTS.theme.gold && D.theme.emerald === DEFAULTS.theme.emerald){
+      D.theme = clone(NAVY_ACCENT);
+    } else if (!goingDark && wasDark && D.theme.gold === NAVY_ACCENT.gold && D.theme.emerald === NAVY_ACCENT.emerald){
+      D.theme = clone(DEFAULTS.theme);
+    }
+    D.ambientTheme = newKey;
     applyAmbientTheme();
+    applyTheme();
+    themeGold.value = D.theme.gold;
+    themeEmerald.value = D.theme.emerald;
     refreshAmbSwatches();
     save();
   });
@@ -2801,6 +3009,22 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
 
   /* ---------- profile trigger, filter chips, tree collapse — delegated on stage ---------- */
   stage.addEventListener("click", function(e){
+    var faithTabBtn = e.target.closest("[data-faith-tab]");
+    if (faithTabBtn){
+      faithTab = faithTabBtn.getAttribute("data-faith-tab");
+      var bar = faithTabBtn.closest(".faith-tabbar");
+      bar.querySelectorAll(".faith-tab").forEach(function(b){
+        var on = b === faithTabBtn;
+        b.classList.toggle("is-active", on);
+        b.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      var panels = bar.closest(".faith-tabs-wrap").querySelector(".faith-tab-panels");
+      panels.querySelectorAll(".faith-panel").forEach(function(p){
+        p.classList.toggle("is-active", p.getAttribute("data-faith-panel") === faithTab);
+      });
+      positionFaithIndicator();
+      return;
+    }
     var filterBtn = e.target.closest("[data-filter]");
     if (filterBtn){
       var val = filterBtn.getAttribute("data-filter");

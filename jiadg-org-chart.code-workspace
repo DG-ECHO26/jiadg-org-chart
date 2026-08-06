@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"name": "jiadg-org-chart",
+			"path": "."
+		},
+		{
+			"name": "Project-01-Porfolio",
+			"path": "../Project-01-Porfolio"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Project-01-Porfolio",
+		"liveServer.settings.port": 5501
+	}
+}

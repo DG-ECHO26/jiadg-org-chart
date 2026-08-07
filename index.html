@@ -7,12 +7,12 @@
 
 <style>
   :root{
-    --navy:#1D1D1F; --navy-2:#000000; --navy-3:#000000;
-    --gold:#A6841A; --gold-2:#8C6F14; --gold-dim:rgba(166,132,26,.10);
-    --emerald:#1F7A4D; --emerald-dim:rgba(31,122,77,.10);
-    --amber:#B45309; --danger:#C0392B;
-    --ink:#1D1D1F; --soft:#6E6E73; --muted:#8E8E93;
-    --bg:#F8F8FA; --bg-2:#F0F0F3; --surface:#FFFFFF;
+    --navy:#0B1F3A;
+    --gold:#C8A64D; --gold-2:#8C7436; --gold-dim:rgba(200,166,77,.12);
+    --emerald:#3D8B5A; --emerald-dim:rgba(61,139,90,.10);
+    --amber:#D8A343; --danger:#C54F4F;
+    --ink:#1B1B1F; --soft:#666666; --muted:#9A9A9A;
+    --bg:#F8F7F4; --bg-2:#F0EEE9; --surface:#FFFFFF;
     --glass:rgba(255,255,255,.62);
     --glass-2:rgba(255,255,255,.94);
     --glass-border:rgba(255,255,255,.55);
@@ -47,13 +47,13 @@
      body, breaking the live accent-color picker while navy is active. */
   body.theme-navy{
     color-scheme:dark;
-    --ink:#EAF1F9; --soft:#C3D2E3; --muted:#8DA2BA;
-    --bg:#0B1B2E; --bg-2:#16324F; --surface:#132D4A;
+    --ink:#F4F4F4; --soft:#C7CCD3; --muted:#B4B4B4;
+    --bg:#08111F; --bg-2:#121A28; --surface:#172233;
     --glass:rgba(255,255,255,.045);
     --glass-2:rgba(255,255,255,.075);
     --glass-border:rgba(255,255,255,.14);
-    --edge:rgba(255,255,255,.10);
-    --edge-2:rgba(255,255,255,.16);
+    --edge:rgba(255,255,255,.08);
+    --edge-2:rgba(255,255,255,.14);
     --shadow-xs:0 1px 0 rgba(255,255,255,.04) inset, 0 2px 10px rgba(0,0,0,.24);
     --shadow-sm:0 1px 0 rgba(255,255,255,.05) inset, 0 10px 26px rgba(0,0,0,.30);
     --shadow-md:0 1px 0 rgba(255,255,255,.06) inset, 0 22px 48px rgba(0,0,0,.42);
@@ -63,9 +63,9 @@
   /* These three fill with --ink as a solid "inverse" chip in the light theme;
      on navy, --ink is a light text color, so they'd render invisible unless
      swapped to a gold fill instead. */
-  body.theme-navy .tool.is-on{background:var(--gold);color:#10243C;border-color:var(--gold)}
-  body.theme-navy .toast{background:var(--gold);color:#10243C}
-  body.theme-navy .filter-chip.is-active{background:var(--gold);border-color:var(--gold);color:#10243C}
+  body.theme-navy .tool.is-on{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+  body.theme-navy .toast{background:var(--gold);color:var(--bg)}
+  body.theme-navy .filter-chip.is-active{background:var(--gold);border-color:var(--gold);color:var(--bg)}
   body.theme-navy .tier-card::before{background:#5C8BC4;box-shadow:0 0 20px rgba(92,139,196,.7)}
 
   .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
@@ -74,9 +74,9 @@
   /* ---- Ambient field: soft aurora blobs, off-white base, never pure black/harsh ---- */
   .ambient{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;
     background:
-      radial-gradient(38% 32% at 12% 8%, rgba(166,132,26,.10) 0%, rgba(166,132,26,0) 70%),
-      radial-gradient(42% 36% at 88% 6%, rgba(31,122,77,.08) 0%, rgba(31,122,77,0) 70%),
-      radial-gradient(46% 40% at 96% 92%, rgba(166,132,26,.09) 0%, rgba(166,132,26,0) 70%),
+      radial-gradient(38% 32% at 12% 8%, rgba(200,166,77,.10) 0%, rgba(200,166,77,0) 70%),
+      radial-gradient(42% 36% at 88% 6%, rgba(61,139,90,.08) 0%, rgba(61,139,90,0) 70%),
+      radial-gradient(46% 40% at 96% 92%, rgba(200,166,77,.09) 0%, rgba(200,166,77,0) 70%),
       radial-gradient(40% 34% at 4% 96%, rgba(30,58,95,.06) 0%, rgba(30,58,95,0) 70%),
       linear-gradient(180deg,#FAFAFC 0%,#F8F8FA 55%,#F4F4F7 100%);
   }
@@ -111,6 +111,12 @@
   .tool.is-on:hover{background:#000;color:#fff}
   .tool.ghost{border-color:transparent;background:transparent;color:var(--muted)}
   .tool.ghost:hover{color:var(--ink);background:var(--bg-2);box-shadow:none}
+  .tool.icon-only{width:34px;height:34px;padding:0;display:grid;place-items:center;flex:0 0 auto}
+  .tool.icon-only svg{width:16px;height:16px}
+  .scheme-toggle svg{transition:transform .32s var(--ease-spring),opacity .22s var(--ease)}
+  .scheme-toggle .ic-moon{display:none}
+  body.theme-navy .scheme-toggle .ic-sun{display:none}
+  body.theme-navy .scheme-toggle .ic-moon{display:block}
   .counter{display:flex;align-items:baseline;gap:6px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500;white-space:nowrap}
   .counter b{font-size:14px;color:var(--ink);font-weight:700;letter-spacing:.01em}
 
@@ -135,7 +141,7 @@
   /* ---- Type ---- */
   .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--soft);margin:0 0 10px;
     opacity:0;animation:riseIn .5s var(--ease) forwards}
-  .eyebrow::before{content:"";width:20px;height:1.5px;background:linear-gradient(90deg,rgba(166,132,26,0),var(--gold));border-radius:2px}
+  .eyebrow::before{content:"";width:20px;height:1.5px;background:linear-gradient(90deg,rgba(200,166,77,0),var(--gold));border-radius:2px}
   h2.title{font-family:var(--display);font-size:clamp(28px,3.6vw,40px);line-height:1.1;letter-spacing:-.02em;font-weight:700;
     color:var(--ink);margin:0 0 8px;opacity:0;animation:riseIn .55s var(--ease) .05s forwards}
   .subtitle{font-size:clamp(13px,1.2vw,15.5px);color:var(--soft);margin:0;font-weight:400;line-height:1.5;
@@ -147,7 +153,7 @@
   /* ---- Anniversary badge ---- */
   .badge{display:inline-flex;align-items:center;gap:9px;
     background:var(--gold-dim);
-    border:1px solid rgba(166,132,26,.24);color:var(--gold-2);border-radius:99px;padding:8px 18px 8px 14px;
+    border:1px solid rgba(200,166,77,.24);color:var(--gold-2);border-radius:99px;padding:8px 18px 8px 14px;
     font-size:clamp(10.5px,1.1vw,12px);font-weight:600;letter-spacing:.06em;text-transform:uppercase;
     margin-bottom:18px;transition:transform .22s var(--ease-spring),box-shadow .22s var(--ease)}
   .badge:hover{transform:translateY(-1px) scale(1.02)}
@@ -160,7 +166,7 @@
   .cover h1{font-family:var(--display);font-size:clamp(32px,4.6vw,50px);line-height:1.08;letter-spacing:-.024em;font-weight:700;
     color:var(--ink);margin:0}
   .cover .city{display:block;font-family:var(--body);font-size:.34em;letter-spacing:.05em;text-transform:uppercase;font-weight:600;color:var(--gold-2);margin-top:12px}
-  .rule{width:64px;height:2px;background:linear-gradient(90deg,var(--gold),rgba(166,132,26,0));border-radius:3px;margin:20px 0 22px}
+  .rule{width:64px;height:2px;background:linear-gradient(90deg,var(--gold),rgba(200,166,77,0));border-radius:3px;margin:20px 0 22px}
 
   /* ---- Dashboard stat cards (Main Page) ---- */
   .stat-row-label{margin:22px 0 0;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700}
@@ -180,16 +186,16 @@
     border:1px solid var(--glass-border);box-shadow:var(--shadow-lg);
     animation:cdIn .8s cubic-bezier(.2,.7,.3,1) both, cdGlow 4s ease-in-out .8s infinite}
   @keyframes cdIn{0%{opacity:0;transform:translateY(14px)}100%{opacity:1;transform:translateY(0)}}
-  @keyframes cdGlow{0%,100%{box-shadow:var(--shadow-md),0 0 0 0 rgba(166,132,26,.10)}
-    50%{box-shadow:var(--shadow-md),0 0 30px 2px rgba(166,132,26,.14)}}
+  @keyframes cdGlow{0%,100%{box-shadow:var(--shadow-md),0 0 0 0 rgba(200,166,77,.10)}
+    50%{box-shadow:var(--shadow-md),0 0 30px 2px rgba(200,166,77,.14)}}
   .countdown .spark{display:none;position:absolute;width:4px;height:4px;border-radius:50%;
-    background:var(--gold);box-shadow:0 0 8px 2px rgba(166,132,26,.6);pointer-events:none}
+    background:var(--gold);box-shadow:0 0 8px 2px rgba(200,166,77,.6);pointer-events:none}
   .countdown.is-live .spark{display:block;animation:cdSpark 1.8s ease-in-out infinite}
   @keyframes cdSpark{0%,100%{opacity:0;transform:scale(.4) translateY(0)}50%{opacity:1;transform:scale(1.3) translateY(-6px)}}
   .spark.s1{top:14%;left:6%}
-  .spark.s2{top:22%;left:92%;animation-delay:.3s;background:var(--emerald);box-shadow:0 0 8px 2px rgba(31,122,77,.55)}
+  .spark.s2{top:22%;left:92%;animation-delay:.3s;background:var(--emerald);box-shadow:0 0 8px 2px rgba(61,139,90,.55)}
   .spark.s3{top:76%;left:4%;animation-delay:.6s}
-  .spark.s4{top:80%;left:94%;animation-delay:.9s;background:var(--emerald);box-shadow:0 0 8px 2px rgba(31,122,77,.55)}
+  .spark.s4{top:80%;left:94%;animation-delay:.9s;background:var(--emerald);box-shadow:0 0 8px 2px rgba(61,139,90,.55)}
   .spark.s5{top:8%;left:50%;animation-delay:1.2s}
   .spark.s6{top:88%;left:48%;animation-delay:1.5s}
   .countdown-label{margin:0 0 clamp(16px,2.6vh,24px);font-size:10px;letter-spacing:.26em;text-transform:uppercase;
@@ -198,7 +204,7 @@
     max-width:420px;margin:0 auto}
   .flip-tile{position:relative;display:flex;flex-direction:column;aspect-ratio:1/1.06;border-radius:16px;
     overflow:hidden;background:linear-gradient(165deg,#26262A,#1A1A1D);
-    border:1px solid rgba(166,132,26,.3);
+    border:1px solid rgba(200,166,77,.3);
     box-shadow:0 12px 28px rgba(16,24,40,.18),inset 0 1px 0 rgba(255,255,255,.08);
     opacity:0;animation:cdTileIn .6s cubic-bezier(.2,.7,.3,1) forwards}
   .flip-tile:nth-child(1){animation-delay:.15s}
@@ -238,8 +244,8 @@
   .mission-block .mission-text{margin:0;font-family:var(--body);font-size:13.5px;line-height:1.55;color:var(--soft)}
   .cover-art{display:grid;place-items:center;position:relative}
   .cover-art .halo{position:absolute;width:min(100%,430px);aspect-ratio:1;border-radius:50%;
-    border:1px solid rgba(166,132,26,.14);
-    box-shadow:0 0 60px rgba(166,132,26,.08) inset;
+    border:1px solid rgba(200,166,77,.14);
+    box-shadow:0 0 60px rgba(200,166,77,.08) inset;
     animation:haloSpin 60s linear infinite}
   .cover-art .halo.two{width:min(80%,344px);border-color:rgba(16,24,40,.06);animation-duration:80s;animation-direction:reverse}
   @keyframes haloSpin{to{transform:rotate(360deg)}}
@@ -284,8 +290,8 @@
   .icon{width:clamp(34px,3.4vw,44px);height:clamp(34px,3.4vw,44px);border-radius:var(--r-sm);display:grid;place-items:center;flex:0 0 auto;
     background:var(--bg-2);border:1px solid var(--edge);color:var(--soft);transition:transform .2s var(--ease-spring)}
   .icon svg{width:52%;height:52%}
-  .icon.i-gold{background:var(--gold-dim);border-color:rgba(166,132,26,.24);color:var(--gold-2)}
-  .icon.i-emerald{background:var(--emerald-dim);border-color:rgba(31,122,77,.22);color:var(--emerald)}
+  .icon.i-gold{background:var(--gold-dim);border-color:rgba(200,166,77,.24);color:var(--gold-2)}
+  .icon.i-emerald{background:var(--emerald-dim);border-color:rgba(61,139,90,.22);color:var(--emerald)}
 
   /* ---- Editing ---- */
   .ed{outline:none;border-radius:5px;min-width:14px;display:inline-block}
@@ -342,7 +348,7 @@
   .tier-tag{font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:5px 0 0}
   .connector{display:grid;justify-items:center;padding:10px 0}
   .connector .line{width:1.5px;height:clamp(14px,2.4vh,26px);background:linear-gradient(var(--edge-2),var(--gold))}
-  .connector .node{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 5px rgba(166,132,26,.12);margin:5px 0}
+  .connector .node{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 5px rgba(200,166,77,.12);margin:5px 0}
   .connector .line.tail{background:linear-gradient(var(--gold),var(--edge-2))}
 
   /* ---- Ministry cards ---- */
@@ -361,7 +367,7 @@
     font-family:var(--display);font-size:clamp(16px,1.8vw,21px);font-weight:700;box-shadow:0 12px 26px rgba(16,24,40,.16);
     transition:transform .25s var(--ease-spring)}
   .card:hover .avatar{transform:scale(1.05)}
-  .avatar.a-gold{background:linear-gradient(150deg,#C9A227,#8C6F14);color:#fff;border-color:transparent;box-shadow:0 12px 28px rgba(166,132,26,.22)}
+  .avatar.a-gold{background:linear-gradient(150deg,#C8A64D,#8C7436);color:#fff;border-color:transparent;box-shadow:0 12px 28px rgba(200,166,77,.22)}
   .duties{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px;justify-items:start}
   .duties li{display:flex;align-items:center;gap:9px;font-size:clamp(12px,1.3vw,14.5px);font-weight:500;color:var(--soft)}
   .duties li .dot{width:6px;height:6px;border-radius:50%;background:var(--emerald);flex:0 0 auto}
@@ -483,7 +489,7 @@
     font-family:var(--display);font-size:16px;font-weight:700;color:#fff;
     background:linear-gradient(150deg,#3A3A3E,#1D1D1F);border:1px solid var(--edge-2)}
   .tnode-avatar img{width:100%;height:100%;object-fit:cover}
-  .tnode.t-d0 .tnode-avatar{background:linear-gradient(150deg,#C9A227,#8C6F14)}
+  .tnode.t-d0 .tnode-avatar{background:linear-gradient(150deg,#C8A64D,#8C7436)}
   .tnode.t-d1 .tnode-avatar{background:linear-gradient(150deg,#2A9463,#1B6E49)}
   .tnode-dot{position:absolute;right:-1px;bottom:-1px;width:13px;height:13px;border-radius:50%;border:2px solid var(--surface);background:var(--muted)}
   .tnode.t-d0 .tnode-dot{background:var(--gold)}
@@ -491,7 +497,7 @@
   .tnode-name{margin:4px 0 0;font-size:12px;font-weight:700;color:var(--ink);text-align:center;line-height:1.3;cursor:pointer}
   .tnode-name:hover{color:var(--gold-2)}
   .tnode-role{margin:0;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:center}
-  .tnode-role-pick{margin:1px 0 0;width:auto;max-width:100%;background:var(--gold-dim);border:1px solid rgba(166,132,26,.34);
+  .tnode-role-pick{margin:1px 0 0;width:auto;max-width:100%;background:var(--gold-dim);border:1px solid rgba(200,166,77,.34);
     color:var(--gold-2);font-family:var(--body);font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
     padding:3px 7px;border-radius:99px;cursor:pointer}
   .tnode-desc{margin:8px 0 0;padding-top:8px;border-top:1px solid var(--edge);width:100%;
@@ -513,11 +519,11 @@
   /* ---- Growth Track (New Members workflow) ---- */
   .gt-flow-cta{grid-column:1/-1;display:flex;align-items:center;gap:16px;margin-top:4px;width:100%;text-align:left;
     background:var(--glass-2);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);
-    border:1px solid rgba(166,132,26,.3);border-radius:var(--r-xl);padding:clamp(15px,2vw,21px) clamp(17px,2.4vw,25px);
+    border:1px solid rgba(200,166,77,.3);border-radius:var(--r-xl);padding:clamp(15px,2vw,21px) clamp(17px,2.4vw,25px);
     cursor:pointer;transition:transform .28s var(--ease),box-shadow .28s var(--ease),border-color .28s var(--ease);font-family:var(--body);color:inherit}
   .gt-flow-cta:hover{transform:translateY(-3px) scale(1.01);box-shadow:var(--shadow-md);border-color:var(--gold)}
   .gt-flow-cta-icon{flex:0 0 auto;width:48px;height:48px;border-radius:var(--r-md);display:grid;place-items:center;
-    background:var(--gold-dim);border:1px solid rgba(166,132,26,.3);color:var(--gold-2)}
+    background:var(--gold-dim);border:1px solid rgba(200,166,77,.3);color:var(--gold-2)}
   .gt-flow-cta-icon svg{width:52%;height:52%}
   .gt-flow-cta-text{display:flex;flex-direction:column;gap:2px;min-width:0}
   .gt-flow-cta-label{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--gold-2)}
@@ -583,12 +589,12 @@
     border-radius:var(--r-2xl);background:var(--glass-2);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);
     border:1px solid var(--glass-border);box-shadow:var(--shadow-lg);overflow:hidden}
   .gt-complete-badge{display:inline-grid;place-items:center;width:58px;height:58px;border-radius:50%;margin-bottom:14px;
-    background:var(--gold-dim);border:1px solid rgba(166,132,26,.3);color:var(--gold-2)}
+    background:var(--gold-dim);border:1px solid rgba(200,166,77,.3);color:var(--gold-2)}
   .gt-complete-badge svg{width:52%;height:52%}
   .gt-complete h3{margin:0 0 8px;font-family:var(--display);font-size:clamp(22px,3vw,30px);font-weight:800;color:var(--ink)}
   .gt-complete p{margin:0 auto;max-width:480px;font-size:13px;line-height:1.6;color:var(--soft)}
   .gt-cta{margin-top:20px;display:inline-flex;align-items:center;gap:9px;background:var(--gold-dim);color:var(--gold-2);
-    border:1px solid rgba(166,132,26,.34);border-radius:99px;padding:10px 20px;font-family:var(--body);font-size:12px;font-weight:700;
+    border:1px solid rgba(200,166,77,.34);border-radius:99px;padding:10px 20px;font-family:var(--body);font-size:12px;font-weight:700;
     letter-spacing:.04em}
   .gt-cta svg{width:14px;height:14px}
 
@@ -604,7 +610,7 @@
   .closing img.seal{width:min(124px,26vw);height:auto;margin-bottom:16px;filter:drop-shadow(0 10px 30px rgba(16,24,40,.14))}
   .closing blockquote{margin:0;max-width:900px;font-family:var(--display);font-size:clamp(20px,3.2vw,38px);line-height:1.34;color:var(--ink);font-weight:600}
   .closing .ref{margin:20px 0 0;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-2);font-weight:700}
-  .closing .divider{width:120px;height:1px;background:linear-gradient(90deg,rgba(166,132,26,0),var(--gold),rgba(166,132,26,0));margin:26px 0 18px}
+  .closing .divider{width:120px;height:1px;background:linear-gradient(90deg,rgba(200,166,77,0),var(--gold),rgba(200,166,77,0));margin:26px 0 18px}
   .closing .footer-name{font-size:clamp(12px,1.4vw,15px);font-weight:700;color:var(--ink);letter-spacing:.03em;margin:0}
   .closing .footer-sub{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:6px 0 0;font-weight:500}
 
@@ -750,7 +756,7 @@
     box-shadow:0 0 0 1px var(--edge-2);transition:transform .18s var(--ease-spring)}
   .tone-opt:hover{transform:scale(1.1)}
   .tone-opt.t-def{background:linear-gradient(150deg,#3A3A3E,#1D1D1F)}
-  .tone-opt.t-gold{background:linear-gradient(150deg,#C9A227,#8C6F14)}
+  .tone-opt.t-gold{background:linear-gradient(150deg,#C8A64D,#8C7436)}
   .tone-opt.t-emerald{background:linear-gradient(150deg,#2A9463,#1B6E49)}
   .tone-opt.is-active{border-color:var(--ink);box-shadow:0 0 0 1px var(--edge-2),0 0 0 3px rgba(0,0,0,.1)}
   button.icon-pick{cursor:pointer;padding:0;font:inherit;position:relative}
@@ -763,7 +769,7 @@
   .amb-swatch{width:56px;height:40px;border-radius:var(--r-sm);border:2px solid transparent;cursor:pointer;padding:0;
     box-shadow:0 0 0 1px var(--edge-2);position:relative;transition:transform .2s var(--ease-spring),box-shadow .2s var(--ease)}
   .amb-swatch:hover{transform:translateY(-2px)}
-  .amb-swatch.is-active{border-color:var(--gold);box-shadow:0 0 0 1px var(--edge-2),0 0 0 3px rgba(166,132,26,.2)}
+  .amb-swatch.is-active{border-color:var(--gold);box-shadow:0 0 0 1px var(--edge-2),0 0 0 3px rgba(200,166,77,.2)}
   .amb-check{position:absolute;top:4px;right:4px;width:14px;height:14px;border-radius:50%;background:#fff;
     display:none;place-items:center;color:var(--gold-2);box-shadow:0 1px 3px rgba(16,24,40,.22)}
   .amb-swatch.is-active .amb-check{display:grid}
@@ -863,7 +869,7 @@
     html,body{overflow:visible !important;height:auto !important;background:#fff !important}
     /* Printed output always stays light/legible, even when browsing in the navy theme */
     body.theme-navy{
-      --ink:#1D1D1F !important; --soft:#6E6E73 !important; --muted:#8E8E93 !important;
+      --ink:#1B1B1F !important; --soft:#666666 !important; --muted:#9A9A9A !important;
       --surface:#FFFFFF !important; --glass:rgba(255,255,255,.62) !important; --glass-2:rgba(255,255,255,.94) !important;
       --glass-border:rgba(255,255,255,.55) !important; --edge:rgba(60,60,67,.09) !important; --edge-2:rgba(60,60,67,.15) !important;
     }
@@ -891,41 +897,41 @@
 
   </style>
 
-<svg class="vh" aria-hidden="true"><defs>
-  <g id="ic-music"><path d="M9 18V5.5l10-2V16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="6.6" cy="18" r="2.6" stroke="currentColor" stroke-width="1.9" fill="none"/><circle cx="16.6" cy="16" r="2.6" stroke="currentColor" stroke-width="1.9" fill="none"/></g>
-  <g id="ic-book"><path d="M12 6.4C10.4 5 8.4 4.3 5 4.3c-.7 0-1.2.5-1.2 1.2v11.4c0 .6.5 1.1 1.2 1.1 3.4 0 5.4.7 7 2.1 1.6-1.4 3.6-2.1 7-2.1.7 0 1.2-.5 1.2-1.1V5.5c0-.7-.5-1.2-1.2-1.2-3.4 0-5.4.7-7 2.1Zm0 0V20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g>
-  <g id="ic-admin"><rect x="4.2" y="3.6" width="15.6" height="16.8" rx="2.6" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M8.4 8.6h7.2M8.4 12h7.2M8.4 15.4h4.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></g>
-  <g id="ic-media"><rect x="2.8" y="6.4" width="12.6" height="11.2" rx="2.6" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="m15.4 12.4 4.4-2.9c.5-.4 1.2 0 1.2.6v5.8c0 .6-.7 1-1.2.6l-4.4-2.9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="none"/></g>
-  <g id="ic-finance"><circle cx="12" cy="12" r="8.4" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M12 7.2v9.6M14.6 9.6c-.5-.8-1.5-1.2-2.6-1.2-1.5 0-2.6.8-2.6 2s1.1 1.8 2.6 1.8 2.6.6 2.6 1.8-1.1 2-2.6 2c-1.1 0-2.1-.4-2.6-1.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/></g>
-  <g id="ic-heart"><path d="M12 20.2S3.8 15.4 3.8 9.6a4.6 4.6 0 0 1 8.2-2.9 4.6 4.6 0 0 1 8.2 2.9c0 5.8-8.2 10.6-8.2 10.6Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="none"/></g>
-  <g id="ic-prayer"><path d="M12 21c3.6 0 6-2.6 6-6.2 0-4.6-6-11.8-6-11.8S6 10.2 6 14.8C6 18.4 8.4 21 12 21Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="none"/><path d="M12 17.4c1.4 0 2.4-1 2.4-2.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/></g>
-  <g id="ic-van"><path d="M2.8 16.2V8.4c0-.9.7-1.6 1.6-1.6h8.2v9.4M12.6 9.6h3.6l3.8 3.6v3H12.6" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" fill="none"/><circle cx="7.4" cy="17" r="2" stroke="currentColor" stroke-width="1.8" fill="none"/><circle cx="16.8" cy="17" r="2" stroke="currentColor" stroke-width="1.8" fill="none"/></g>
-  <g id="ic-check"><path d="M4.8 12.6 9.6 17.4 19.2 6.6" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g>
-  <g id="ic-crown"><path d="M3.6 17.4h16.8M4.4 17.4 3 7.4l5 3.6L12 4.6l4 6.4 5-3.6-1.4 10" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" fill="none"/></g>
-  <g id="ic-shepherd"><path d="M8.6 20.4V9.8a3.4 3.4 0 0 1 6.8 0M15.4 9.8c0-2.5 1.4-4 3-4M12 20.4h6.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g>
-  <g id="ic-people"><circle cx="9" cy="8.6" r="3.2" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M3.4 19.4c0-3.1 2.5-5.4 5.6-5.4s5.6 2.3 5.6 5.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M16.2 6.2a3.2 3.2 0 0 1 0 6M17 14.4c2.2.5 3.8 2.4 3.8 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></g>
-  <g id="ic-hands"><path d="M12 20.4c-3.4 0-6-2.4-6-6V8.2c0-.9.7-1.6 1.6-1.6s1.6.7 1.6 1.6v3M12 20.4c3.4 0 6-2.4 6-6V8.2c0-.9-.7-1.6-1.6-1.6s-1.6.7-1.6 1.6v3M12 11.4V4.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g>
-  <g id="ic-star"><path d="m12 4.4 2.3 4.9 5.3.7-3.9 3.7 1 5.3-4.7-2.6-4.7 2.6 1-5.3-3.9-3.7 5.3-.7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="none"/></g>
-  <g id="ic-tambourine"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8" fill="none"/><circle cx="12" cy="12" r="4.4" stroke="currentColor" stroke-width="1.6" fill="none"/><circle cx="12" cy="3.4" r="1.3" stroke="currentColor" stroke-width="1.4" fill="none"/><circle cx="20.6" cy="12" r="1.3" stroke="currentColor" stroke-width="1.4" fill="none"/><circle cx="3.4" cy="12" r="1.3" stroke="currentColor" stroke-width="1.4" fill="none"/></g>
-  <g id="ic-mic"><rect x="9" y="3" width="6" height="11" rx="3" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M5.4 11.4a6.6 6.6 0 0 0 13.2 0M12 18v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></g>
-  <g id="ic-guitar"><path d="M6.4 13.6a4.6 4.6 0 1 0 6.6 5.2c.5-2 2-2.6 3.2-3.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="m15.4 14.4 4.6-4.6a2.2 2.2 0 0 0-3.2-3.2l-4.6 4.6" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="none"/></g>
-  <g id="ic-speaker"><path d="M4.4 9.4h3.6l4.6-3.8v12.8L8 14.6H4.4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="none"/><path d="M16 9a4.2 4.2 0 0 1 0 6M18.6 6.2a8 8 0 0 1 0 11.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/></g>
-  <g id="ic-cake"><path d="M4.4 20.4h15.2M5.6 20.4v-5.2c0-1.3 1-2.3 2.3-2.3h8.2c1.3 0 2.3 1 2.3 2.3v5.2M12 12.9V9.4M9 12.9V10M15 12.9V10M12 6.4a1.4 1.4 0 1 0 0-2.8 1.4 1.4 0 0 0 0 2.8Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g>
-  <g id="ic-arrow-r"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g>
-  <g id="ic-arrow-l"><path d="M19 12H5M11 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g>
-  <g id="ic-chev"><path d="M8 4l8 8-8 8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g>
-  <g id="ic-grip"><circle cx="8" cy="6" r="1.6" fill="currentColor"/><circle cx="16" cy="6" r="1.6" fill="currentColor"/><circle cx="8" cy="12" r="1.6" fill="currentColor"/><circle cx="16" cy="12" r="1.6" fill="currentColor"/><circle cx="8" cy="18" r="1.6" fill="currentColor"/><circle cx="16" cy="18" r="1.6" fill="currentColor"/></g>
-  <g id="ic-clock"><circle cx="12" cy="12" r="8.4" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M12 7.6V12l3.2 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g>
-  <g id="ic-pin"><path d="M12 21.5s6.8-6.4 6.8-11.6a6.8 6.8 0 1 0-13.6 0c0 5.2 6.8 11.6 6.8 11.6Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="none"/><circle cx="12" cy="9.8" r="2.4" stroke="currentColor" stroke-width="1.8" fill="none"/></g>
-  <g id="ic-church"><path d="M12 3v3.4M10.6 4.4h2.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M4.6 20.4V11l7.4-5 7.4 5v9.4" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="none"/><path d="M9.8 20.4v-5a2.2 2.2 0 0 1 4.4 0v5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="none"/><path d="M4.6 20.4h14.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></g>
-  <g id="ic-calendar"><rect x="3.6" y="5.2" width="16.8" height="15.2" rx="2.4" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M3.6 9.6h16.8M8 3.4v3.6M16 3.4v3.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="8.2" cy="13.6" r="1.1" fill="currentColor"/><circle cx="12" cy="13.6" r="1.1" fill="currentColor"/><circle cx="15.8" cy="13.6" r="1.1" fill="currentColor"/></g>
-  <g id="ic-trophy"><path d="M7 4.6h10v3.8a5 5 0 0 1-10 0Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="none"/><path d="M7 5.6H4.4a2 2 0 0 0 0 4H7M17 5.6h2.6a2 2 0 0 1 0 4H17" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/><path d="M12 13.4v3.2M9.2 20.4h5.6M9.6 20.4c0-1.8.8-2.7 2.4-3.8 1.6 1.1 2.4 2 2.4 3.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g>
-  <g id="ic-search"><circle cx="11" cy="11" r="6.6" stroke="currentColor" stroke-width="2" fill="none"/><path d="m20 20-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></g>
-  <g id="ic-plus"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></g>
-  <g id="ic-minus"><path d="M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></g>
-  <g id="ic-fit"><path d="M4 9V5a1 1 0 0 1 1-1h4M20 9V5a1 1 0 0 0-1-1h-4M4 15v4a1 1 0 0 0 1 1h4M20 15v4a1 1 0 0 1-1 1h-4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g>
-  <g id="ic-layers"><path d="m12 3 9 5-9 5-9-5 9-5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" fill="none"/><path d="m3 13 9 5 9-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g>
-</defs></svg>
+<svg class="vh" aria-hidden="true"><defs><g id="ic-music" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></g>
+  <g id="ic-book" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v16"/><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"/></g>
+  <g id="ic-admin" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></g>
+  <g id="ic-media" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></g>
+  <g id="ic-finance" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></g>
+  <g id="ic-heart" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></g>
+  <g id="ic-prayer" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 14h2a2 2 0 0 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16"/><path d="m14.45 13.39 5.05-4.694C20.196 8 21 6.85 21 5.75a2.75 2.75 0 0 0-4.797-1.837.276.276 0 0 1-.406 0A2.75 2.75 0 0 0 11 5.75c0 1.2.802 2.248 1.5 2.946L16 11.95"/><path d="m2 15 6 6"/><path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a1 1 0 0 0-2.75-2.91"/></g>
+  <g id="ic-van" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6v6"/><path d="M15 6v6"/><path d="M2 12h19.6"/><path d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3"/><circle cx="7" cy="18" r="2"/><path d="M9 18h5"/><circle cx="16" cy="18" r="2"/></g>
+  <g id="ic-check" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g>
+  <g id="ic-crown" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/></g>
+  <g id="ic-shepherd" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/></g>
+  <g id="ic-people" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></g>
+  <g id="ic-hands" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></g>
+  <g id="ic-star" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></g>
+  <g id="ic-tambourine" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11h.01"/><path d="M14 6h.01"/><path d="M18 6h.01"/><path d="M6.5 13.1h.01"/><path d="M22 5c0 9-4 12-6 12s-6-3-6-12c0-2 2-3 6-3s6 1 6 3"/><path d="M17.4 9.9c-.8.8-2 .8-2.8 0"/><path d="M10.1 7.1C9 7.2 7.7 7.7 6 8.6c-3.5 2-4.7 3.9-3.7 5.6 4.5 7.8 9.5 8.4 11.2 7.4.9-.5 1.9-2.1 1.9-4.7"/><path d="M9.1 16.5c.3-1.1 1.4-1.7 2.4-1.4"/></g>
+  <g id="ic-mic" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19v3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><rect x="9" y="2" width="6" height="13" rx="3"/></g>
+  <g id="ic-guitar" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m11.9 12.1 4.514-4.514"/><path d="M20.1 2.3a1 1 0 0 0-1.4 0l-1.114 1.114A2 2 0 0 0 17 4.828v1.344a2 2 0 0 1-.586 1.414A2 2 0 0 1 17.828 7h1.344a2 2 0 0 0 1.414-.586L21.7 5.3a1 1 0 0 0 0-1.4z"/><path d="m6 16 2 2"/><path d="M8.23 9.85A3 3 0 0 1 11 8a5 5 0 0 1 5 5 3 3 0 0 1-1.85 2.77l-.92.38A2 2 0 0 0 12 18a4 4 0 0 1-4 4 6 6 0 0 1-6-6 4 4 0 0 1 4-4 2 2 0 0 0 1.85-1.23z"/></g>
+  <g id="ic-speaker" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.364 18.364a9 9 0 0 0 0-12.728"/></g>
+  <g id="ic-cake" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"/><path d="M2 21h20"/><path d="M7 8v3"/><path d="M12 8v3"/><path d="M17 8v3"/><path d="M7 4h.01"/><path d="M12 4h.01"/><path d="M17 4h.01"/></g>
+  <g id="ic-arrow-r" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></g>
+  <g id="ic-arrow-l" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></g>
+  <g id="ic-chev" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></g>
+  <g id="ic-grip" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></g>
+  <g id="ic-clock" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></g>
+  <g id="ic-pin" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></g>
+  <g id="ic-church" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 9h4"/><path d="M12 7v5"/><path d="M14 21v-3a2 2 0 0 0-4 0v3"/><path d="m18 9 3.52 2.147a1 1 0 0 1 .48.854V19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6.999a1 1 0 0 1 .48-.854L6 9"/><path d="M6 21V7a1 1 0 0 1 .376-.782l5-3.999a1 1 0 0 1 1.249.001l5 4A1 1 0 0 1 18 7v14"/></g>
+  <g id="ic-calendar" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v3"/><path d="M16 2v3"/><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></g>
+  <g id="ic-trophy" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14.66V17a1 1 0 0 1-1 1 2 2 0 0 0-2 2v2"/><path d="M14 14.66V17a1 1 0 0 0 1 1 2 2 0 0 1 2 2v2"/><path d="M17.916 10H19.5A2.5 2.5 0 0 0 22 7.5V5a1 1 0 0 0-1-1h-3"/><path d="M4 22h16"/><path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z"/><path d="M6.084 10H4.5A2.5 2.5 0 0 1 2 7.5V5a1 1 0 0 1 1-1h3"/></g>
+  <g id="ic-search" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></g>
+  <g id="ic-plus" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></g>
+  <g id="ic-minus" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></g>
+  <g id="ic-fit" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="m21 3-7 7"/><path d="m3 21 7-7"/><path d="M9 21H3v-6"/></g>
+  <g id="ic-layers" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></g>
+  <g id="ic-sun" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></g>
+  <g id="ic-moon" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></g></defs></svg>
 
 <div class="ambient" aria-hidden="true"></div>
 <canvas class="liquid-bg" id="liquidBg" aria-hidden="true"></canvas>
@@ -946,6 +952,7 @@
       <button class="tool" id="editBtn" hidden>Edit</button>
       <button class="tool ghost" id="resetBtn" title="Undo your most recent change" hidden>Undo</button>
       <button class="tool ghost" id="themeBtn" title="Customize appearance" hidden>Theme</button>
+      <button type="button" class="tool ghost icon-only scheme-toggle" id="schemeBtn" title="Switch to dark mode" aria-pressed="false"><svg class="ic-sun" viewBox="0 0 24 24"><use href="#ic-sun"/></svg><svg class="ic-moon" viewBox="0 0 24 24"><use href="#ic-moon"/></svg></button>
       <button class="tool ghost" id="authBtn">Sign in</button>
     </div>
   </header>
@@ -1120,7 +1127,7 @@
       gl.uniform3fv(uBlueLoc, hexToVec3(hexArr[2]));
       if (reduceMotion) gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     }
-    setPalette(["#1E3A5F", "#A6841A", "#4A7FC7"]);
+    setPalette(["#0B1F3A", "#C8A64D", "#4A7FC7"]);
     window.__liquidBgSetPalette = setPalette;
 
     var dpr = Math.min(window.devicePixelRatio || 1, 1.75);
@@ -1179,7 +1186,7 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
     anniversaryDate:"2026-08-23T17:00",
     docTitle:"Organisational Chart · v2",
     updated:"Updated August 2026",
-    theme:{ gold:"#A6841A", emerald:"#1F7A4D" },
+    theme:{ gold:"#C8A64D", emerald:"#3D8B5A" },
     ambientTheme:"ivory",
     slideMeta:{
       "Leadership Structure": { eyebrow:"Slide 03", title:"Leadership Structure", sub:"Spiritual covering and governance of the local body" },
@@ -1606,6 +1613,12 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
     if (out.theme && out.theme.gold === "#E3C066" && out.theme.emerald === "#4FBF87"){
       out.theme = clone(DEFAULTS.theme);
     }
+    // Same idea, one palette generation later: docs still sitting on the
+    // previous light-theme defaults (never customized) pick up the new
+    // luxury gold/emerald automatically; genuine custom picks are untouched.
+    if (out.theme && out.theme.gold === "#A6841A" && out.theme.emerald === "#1F7A4D"){
+      out.theme = clone(DEFAULTS.theme);
+    }
     delete out.bibleStudies; delete out.linkup; delete out.linkupTrees;
     return out;
   }
@@ -1636,9 +1649,9 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
   var AMBIENT_PRESETS = {
     ivory: {
       label:"Ivory",
-      css:"radial-gradient(120% 90% at 50% -20%, #FFFBF2 0%, rgba(255,251,242,0) 58%), radial-gradient(90% 70% at 100% 110%, #FBF0D9 0%, rgba(251,240,217,0) 55%), linear-gradient(180deg,#FFFDF8 0%,#FDF8ED 55%,#FAF3E3 100%)",
-      swatch:"linear-gradient(145deg,#FFFDF8,#FBF0D9 60%,#F5E6C8)",
-      shader:["#D8C9A0","#8FA9C7","#EAD9A8"]
+      css:"radial-gradient(120% 90% at 50% -20%, #FBF3E3 0%, rgba(251,243,227,0) 58%), radial-gradient(90% 70% at 100% 110%, #F3E8D2 0%, rgba(243,232,210,0) 55%), linear-gradient(180deg,#FCFAF6 0%,#F9F7F1 55%,#F5F2EA 100%)",
+      swatch:"linear-gradient(145deg,#FCFAF6,#F3E8D2 60%,#E9DBB8)",
+      shader:["#D8C9A0","#8FA9C7","#C8A64D"]
     },
     charcoal: {
       label:"Charcoal",
@@ -1655,19 +1668,28 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
     navy: {
       label:"Navy",
       dark:true,
-      css:"radial-gradient(120% 90% at 50% -20%, #1B3A5E 0%, rgba(27,58,94,0) 60%), radial-gradient(90% 70% at 100% 110%, #0F2C4A 0%, rgba(15,44,74,0) 62%), linear-gradient(180deg,#0B1B2E 0%,#0A1728 55%,#081422 100%)",
-      swatch:"linear-gradient(145deg,#1B3A5E,#102842 55%,#0B1B2E)",
-      shader:["#C9A227","#4FBF87","#E3C066"]
+      css:"radial-gradient(120% 90% at 50% -20%, #16324F 0%, rgba(22,50,79,0) 60%), radial-gradient(90% 70% at 100% 110%, #0D2038 0%, rgba(13,32,56,0) 62%), linear-gradient(180deg,#0B1F3A 0%,#0A1726 55%,#08111F 100%)",
+      swatch:"linear-gradient(145deg,#16324F,#0D2038 55%,#08111F)",
+      shader:["#C8A64D","#4FBF87","#0B1F3A"]
     }
   };
-  var NAVY_ACCENT = { gold:"#E3C066", emerald:"#4FBF87" };
+  var NAVY_ACCENT = { gold:"#C8A64D", emerald:"#4FBF87" };
   function applyAmbientTheme(){
     var key = D.ambientTheme || "ivory";
     var preset = AMBIENT_PRESETS[key] || AMBIENT_PRESETS.ivory;
+    var wantDark = isDarkActive();
+    // The admin's chosen ambient art (gradient/shader) only makes sense when
+    // its light/dark-ness agrees with the visitor's personal toggle — e.g. a
+    // visitor who's picked Light shouldn't see the admin's Navy backdrop art
+    // behind light-mode cards. On a mismatch, fall back to the canonical
+    // Ivory/Navy preset for the art so the two are always visually coherent;
+    // when they agree (including the admin's Charcoal/Gold presets for
+    // light-mode visitors), the admin's actual pick still renders untouched.
+    if (!!preset.dark !== wantDark) preset = AMBIENT_PRESETS[wantDark ? "navy" : "ivory"];
     var amb = document.querySelector(".ambient");
     if (amb) amb.style.background = preset.css;
     if (window.__liquidBgSetPalette) window.__liquidBgSetPalette(preset.shader);
-    document.body.classList.toggle("theme-navy", !!preset.dark);
+    document.body.classList.toggle("theme-navy", wantDark);
   }
 
   /* ---------- path helpers ---------- */
@@ -2160,7 +2182,28 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
   var editBtn = document.getElementById("editBtn");
   var resetBtn = document.getElementById("resetBtn");
   var themeBtn = document.getElementById("themeBtn");
+  var schemeBtn = document.getElementById("schemeBtn");
   var toastEl = document.getElementById("toast");
+
+  /* ---------- personal light/dark toggle (visitor-local, independent of the
+     admin ambient-theme picker above) ---------- */
+  var SCHEME_KEY = "jiadg-color-scheme";
+  var userScheme = localStorage.getItem(SCHEME_KEY);
+  if (userScheme !== "light" && userScheme !== "dark") {
+    userScheme = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+  }
+  function isDarkActive(){ return userScheme === "dark"; }
+  function syncSchemeBtn(){
+    var dark = isDarkActive();
+    schemeBtn.setAttribute("aria-pressed", String(dark));
+    schemeBtn.title = dark ? "Switch to light mode" : "Switch to dark mode";
+  }
+  schemeBtn.addEventListener("click", function(){
+    userScheme = isDarkActive() ? "light" : "dark";
+    localStorage.setItem(SCHEME_KEY, userScheme);
+    applyAmbientTheme();
+    syncSchemeBtn();
+  });
 
   function renderDeck(){
     stage.innerHTML = SLIDES.map(function(s,i){
@@ -2410,7 +2453,7 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
   }
   function initNeonBorder(target, opts){
     opts = opts || {};
-    var color = opts.color || "#A6841A";
+    var color = opts.color || "#C8A64D";
     var roundedPct = opts.rounded != null ? opts.rounded : 22;
     var thick = Math.max(1, Math.min(10, opts.thickness != null ? opts.thickness : 2));
     var borderSize = opts.borderSize != null ? opts.borderSize : 30;
@@ -2487,7 +2530,7 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
   function refreshCountdownNeon(){
     if (neonBorderCleanup){ neonBorderCleanup(); neonBorderCleanup = null; }
     var el = document.getElementById("countdown");
-    if (el) neonBorderCleanup = initNeonBorder(el, { color:"#A6841A", rounded:22, thickness:2, borderSize:30, glow:65, movement:"continuous", speed:7 });
+    if (el) neonBorderCleanup = initNeonBorder(el, { color:"#C8A64D", rounded:22, thickness:2, borderSize:30, glow:65, movement:"continuous", speed:7 });
   }
   /* ---------- interactions ---------- */
   stage.addEventListener("click", function(e){
@@ -3085,6 +3128,6 @@ var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
     document.addEventListener("mouseup", onUp);
   });
 
-  load(function(){ applyTheme(); applyAmbientTheme(); buildDots(); renderDeck(); go(0); updateCountdown(); setInterval(updateCountdown, 1000); });
+  load(function(){ applyTheme(); applyAmbientTheme(); syncSchemeBtn(); buildDots(); renderDeck(); go(0); updateCountdown(); setInterval(updateCountdown, 1000); });
 })();
 </script>
